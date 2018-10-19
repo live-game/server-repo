@@ -47,7 +47,7 @@ class QuestionController {
     }
 
     // delete questions 
-    static deleteQuestions(req,res) {
+    static deleteQuestion(req,res) {
         // check authentication
         if(req.headers.secretcode === process.env.SECRET_CODE){
             Question.findOneAndRemove({
@@ -61,12 +61,40 @@ class QuestionController {
               })
               .catch(error =>{
                   res.status(500).json({
-                      msg: 'ERROR Delete '
+                      msg: 'ERROR Delete Question ',error
                   })
               })
         }else{
             res.status(403).json({
                 msg: 'You are not authorized to delete questions'
+            })
+        }
+    }
+
+    // edit questions
+    static editQuestion(req,res){
+        if(req.headers.secretcode === process.env.SECRET_CODE) {
+            Question.findOneAndUpdate({
+                _id: req.params.id
+            },{
+                question: req.body.question,
+                choices: req.body.choices,
+                answerindex: Number(req.body.answerindex)
+            })
+              .then(question =>{
+                  res.status(201).json({
+                      msg: 'Question has been editted',
+                      data: question
+                  })  
+              })
+              .catch(error =>{
+                  res.status(500).json({
+                      msg: 'ERROR Edit Question ',error
+                  })
+              })
+        }else{
+            res.status(403).json({
+                msg: 'You are not authorized to edit questions'
             })
         }
     }

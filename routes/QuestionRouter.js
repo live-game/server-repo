@@ -6,6 +6,7 @@ const QuestionController = require('../controllers/QuestionController')
 
 router.post('/',QuestionController.createQuestion)
       .get('/lists', QuestionController.getListOfQuestions)
-      .delete('/:id', QuestionController.deleteQuestions)
+      .put('/:id', QuestionController.editQuestion)
+      .delete('/:id', QuestionController.deleteQuestion)
 
 module.exports = router
