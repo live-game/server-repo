@@ -46,6 +46,25 @@ class QuestionController {
           })
     }
 
+    // get n random questions
+    static getRandomQuestion(req,res) {
+        let size = Number(req.body.size)
+        Question.aggregate(
+            [{$sample: {size: size}}]
+        )
+          .then(questions =>{
+              res.status(200).json({
+                  msg: 'List of Questions',
+                  data: questions
+              })
+          })
+          .catch(error =>{
+              res.status(500).json({
+                  msg: 'ERROR Get List of questions ',error
+              })
+          })
+    }
+
     // delete questions 
     static deleteQuestion(req,res) {
         // check authentication
