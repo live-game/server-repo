@@ -30,7 +30,22 @@ class QuestionController {
         }
     }
 
-    // delete question
+    // get list of questions
+    static getListOfQuestions(req,res) {
+        Question.find({})
+          .then(questions =>{
+              res.status(200).json({
+                  msg: 'List of Questions',
+                  data: questions
+              })
+          })
+          .catch(error =>{
+              res.status(500).json({
+                  msg: 'ERROR Get List of questions ',error
+              })
+          })
+    }
+    
 }
 
 module.exports = QuestionController
