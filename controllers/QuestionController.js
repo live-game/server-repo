@@ -45,6 +45,31 @@ class QuestionController {
               })
           })
     }
+
+    // delete questions 
+    static deleteQuestions(req,res) {
+        // check authentication
+        if(req.headers.secretcode === process.env.SECRET_CODE){
+            Question.findOneAndRemove({
+                _id: req.params.id
+            })
+              .then(question =>{
+                  res.status(201).json({
+                      msg: 'Question has been deleted',
+                      data: question
+                  })
+              })
+              .catch(error =>{
+                  res.status(500).json({
+                      msg: 'ERROR Delete '
+                  })
+              })
+        }else{
+            res.status(403).json({
+                msg: 'You are not authorized to delete questions'
+            })
+        }
+    }
     
 }
 
