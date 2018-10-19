@@ -7,6 +7,7 @@ const QuestionRouters = require('./routes/QuestionRouter')
 const app = express()
 
 mongoose.connect('mongodb://localhost:27017/quizdb',{useNewUrlParser: true})
+// mongoose.connect(process.env.MONGO_USER,{useNewUrlParser: true})
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
